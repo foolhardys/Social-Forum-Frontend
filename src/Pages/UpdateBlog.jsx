@@ -16,6 +16,7 @@ const UpdateBlog = () => {
     const [content, setContent] = useState('')
     const [thumbnail, setThumbnail] = useState('')
     const [images, setImages] = useState([])
+    const [category, setCategory] = useState('blog')
     const [requestLoader, setRequestLoader] = useState(false)
     const navigate = useNavigate()
     const { id } = useParams()
@@ -34,6 +35,7 @@ const UpdateBlog = () => {
                 setContent(data?.content)
                 setTitle(data?.title)
                 setThumbnail(data?.thumbnail)
+                setCategory(data?.category)
                 setImages(data?.images)
                 setIsLoading(false)
             } catch (error) {
@@ -53,20 +55,24 @@ const UpdateBlog = () => {
         if (!selectedFile || !selectedFile.type.startsWith('image/')) {
             return toast.error('Please select a valid image file.');
         }
-        console.log(Object.prototype.toString.call(selectedFile))
         setThumbnail(selectedFile)
     }
 
-    const handleImageChange = (event) => {
-        const files = Array.from(event.target.files);
-        const validFiles = Array.from(files).filter(file => file.type.startsWith('image/'))
-        console.log(validFiles);
-        if (!validFiles.length) {
-            return toast.error('Please select valid image files.');
-        }
-        console.log(Object.prototype.toString.call(validFiles));
-        setImages(validFiles)
-    }
+    const handleImagesChange = (event) => {
+        // Array.from(event.target.files).map((image) => {
+        //   if (image.size > 4000000) {
+        //     toast.error('File size should be less than 4mb')
+        //   }
+        //   return
+        // })
+        console.log(event.target.files);
+        setImages(event.target.files)
+        console.log(images);
+        // setImages(event.target.files);
+        // console.log(event.target.files);
+        // console.log(images);
+        // console.log(Array.from(images));
+      };
 
 
     const handleUpdateBlog = async (e) => {
@@ -75,15 +81,16 @@ const UpdateBlog = () => {
         try {
             setRequestLoader(true)
             const token = user.token
-            if (!title || !content || !thumbnail || !images) {
-                toast.error('Enter all fields')
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("content", content);
+            formData.append("category", category);
+            formData.append('thumbnail', thumbnail);
+            for (let i = 0; i < images.length; i++) {
+                formData.append(`images`, images[i])
             }
-            await axios.put(url, {
-                title,
-                content,
-                thumbnail,
-                images
-            },
+            console.log(formData);
+            await axios.put(url, formData,
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -146,8 +153,7 @@ const UpdateBlog = () => {
                         type="file"
                         name="images"
                         id="images"
-                        accept="image/*"
-                        onChange={handleImageChange}
+                        onChange={handleImagesChange}
                         multiple />
                 </div>
                 <button

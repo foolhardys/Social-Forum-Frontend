@@ -35,6 +35,11 @@ export const NavLinks = [
         id: 7,
         text: 'Contact Us',
         url: '/contact'
+    },
+    {
+        id: 8 ,
+        text: 'Dashboard',
+        url: '/dasboard'
     }
 ]
 
@@ -98,34 +103,4 @@ export const Questions = [
 
 export const Filters = ['Teacher Resources', 'Student Resources', 'E - Resources', 'Sample Papers', 'Career Guidance', 'Publications']
 
-export const QuizCategories = [
-    {
-        id: 1,
-        category: 'Class-6'
-
-    },
-    {
-        id: 2,
-        category: 'Class-7'
-    },
-    {
-        id: 3,
-        category: 'Class-8'
-    },
-    {
-        id: 4,
-        category: 'Class-9'
-    },
-    {
-        id: 5,
-        category: 'Class-10'
-    },
-    {
-        id: 6,
-        category: 'Class-11'
-    },
-    {
-        id: 7,
-        category: 'Class-12'
-    },
-]
+export const QuizCategories = ['6', '7', '8', '9', '10', '11', '12']

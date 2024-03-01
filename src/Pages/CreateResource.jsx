@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import SmallLoader from "../Components/SmallLoader";
@@ -8,81 +8,77 @@ const createResource = import.meta.env.VITE_API_URL + '/createResource'
 
 const CreateResource = () => {
 
-  const [formData, setFormData] = useState({
-    title: '',
-    resourceUrl: [],
-    category: 'Teacher Resources'
-  });
+  const [title, setTitle] = useState('')
+  const [resourceType, setResourceType] = useState('file')
+  const [link, setLink] = useState('')
+  const [category, setCategory] = useState('Teacher Resources')
   const [requestLoader, setRequestLoader] = useState(false)
   const navigate = useNavigate()
   const tempuser = localStorage.getItem('user')
   const user = JSON.parse(tempuser)
+  const fileInput = useRef()
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    if (name === 'title') {
+      setTitle(value)
+    }
+    if (name === 'resourceType') {
+      setResourceType(value)
+    }
   };
 
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-
-    if (files.length > 1) {
-      const images = [];
-      for (let i = 0; i < files.length; i++) {
-        images.push(files[i]);
-      }
-      console.log(images);
-      setFormData({
-        ...formData,
-        [name]: images,
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      });
-    }
+  const handleLinkChange = (e) => {
+    setLink(e.target.value)
   }
 
   const handleSelectChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
+    setCategory(e.target.value)
   }
+
+  const handleRadioChange = (e) => {
+    setResourceType(e.target.value)
+  };
 
 
   const handleCreateResource = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    if (resourceType === 'file') {
+      formData.append("title", title);
+      formData.append("category", category);
+      formData.append("resourceType", resourceType);
+      formData.append("resourceFile", fileInput.current.files[0]);
+    }
+
+    if (resourceType === 'link') {
+      formData.append("title", title);
+      formData.append("category", category);
+      formData.append("resourceType", resourceType);
+      formData.append("link", link);
+    }
+    console.log(formData);
 
     try {
       setRequestLoader(true)
       const token = user.token
-      if (!formData.title || !formData.resourceUrl || !formData.category) {
+      if (!title || !category || !resourceType) {
         toast.error('Enter all fields')
       }
-
-      console.log(formData);
-
-      const request = await axios.post(createResource, formData,
+      await axios.post(createResource, formData,
         {
           headers: {
             "Authorization": `Bearer ${token}`,
           }
         }
       );
-      console.log(request);
       setRequestLoader(false)
-      toast.success('Blog created')
-      navigate('/blogs')
+      toast.success('Resource created')
+      navigate('/resources')
     } catch (error) {
       setRequestLoader(false)
       toast.error(error.message)
-      throw new Error(error.message || "Failed to create blog")
     }
   }
 
@@ -91,13 +87,13 @@ const CreateResource = () => {
   return (
     <section className='min-h-screen flex items-center flex-col bg-purple-200 p-4'>
       <div className="lg:w-[980px] w-full">
-        <h1 className="text-[35px] font-[700]">Create a new blog</h1>
+        <h1 className="text-[35px] font-[700]">Create a new resource</h1>
       </div>
       <form onSubmit={handleCreateResource} className="lg:w-[980px] md:w-[700px] w-full flex flex-col gap-2 py-4" >
         <div className="flex flex-col">
           <label htmlFor="title" className="text-[18px] font-[500]">Title</label>
           <input
-            value={formData.title}
+            value={title}
             type="text"
             name="title"
             id="title"
@@ -105,26 +101,56 @@ const CreateResource = () => {
             onChange={handleInputChange}
             required />
         </div>
-        {/* <div className="flex flex-col">
-          <label htmlFor="content" className="text-[18px] font-[500]">Resource URL</label>
-          <input
-            value={''}
-            name="resourseUrl"
-            id="resourseUrl"
-            className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
-            onChange={''}
-            required></input>
-        </div> */}
-        <div className="flex flex-col">
-          <label htmlFor="content" className="text-[18px] font-[500]">Resource URL</label>
-          <input
-            type="file"
-            name="resourceUrl"
-            id="resourceUrl"
-            required
-            className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
-            onChange={handleFileChange}></input>
+        <div className="flex flex-row gap-4 my-2">
+          <div className="flex gap-2">
+            <input
+              type='radio'
+              value="file"
+              name="resourceType"
+              id="file"
+              checked={resourceType === 'file'}
+              className="focus:ring-1 rounded-full focus:ring-primary-500 peer"
+              onChange={handleRadioChange}
+              required />
+            <label htmlFor="file" className="text-[18px] font-[500]">File</label>
+          </div>
+          <div className="flex gap-2">
+            <input
+              type='radio'
+              value="link"
+              name="resourceType"
+              id="link"
+              checked={resourceType === 'link'}
+              className="focus:ring-1 rounded-full focus:ring-primary-500 peer"
+              onChange={handleRadioChange}
+              required />
+            <label htmlFor="link" className="text-[18px] font-[500]">Link</label>
+          </div>
         </div>
+        {
+          resourceType === 'file' ? (
+            <div className="flex flex-col">
+              <label htmlFor="resourceUrl" className="text-[18px] font-[500]">File</label>
+              <input
+                type="file"
+                name="resourceFile"
+                id="resourceUrl"
+                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
+                ref={fileInput}></input>
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              <label htmlFor="url" className="text-[18px] font-[500]">Link</label>
+              <input
+                type="url"
+                name="link"
+                id="url"
+                required
+                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
+                onChange={handleLinkChange}></input>
+            </div>
+          )
+        }
         <div className="flex flex-col">
           <label htmlFor="category" className="text-[18px] font-[500]">Category</label>
           <select

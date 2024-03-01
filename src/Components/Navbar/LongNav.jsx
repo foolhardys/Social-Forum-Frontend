@@ -6,11 +6,13 @@ import { BsPersonFill } from "react-icons/bs";
 const LongNav = () => {
 
     const [active, setActive] = useState(1)
+    const tempuser = localStorage.getItem('user')
+    const user = JSON.parse(tempuser)
 
 
     return (
         <div className='w-full p-4 lg:flex justify-evenly items-center bg-purple-100/90 gap-4 h-[70px] hidden'>
-            <Link to='/' className='text-center lg:text-[30px] text-[25px] font-[800] p-1 text-purple-700 font-display' onClick={()=> setActive(1)} >
+            <Link to='/' className='text-center lg:text-[30px] text-[25px] font-[800] p-1 text-purple-700 font-display' onClick={() => setActive(1)} >
                 Social Forum
             </Link>
             <ul className='min-w-[680px] lg:flex justify-between capitalize p-2'>
@@ -24,7 +26,7 @@ const LongNav = () => {
                     )
                 })}
             </ul>
-            <Link to='/login' className='text-center border-2 rounded-full border-purple-900 lg:text-[30px] text-[25px] font-[600] p-1 text-purple-900 font-display bg-purple-200' >
+            <Link to={user ? `/user` : `/login`} className='text-center border-2 rounded-full border-purple-900 lg:text-[30px] text-[25px] font-[600] p-1 text-purple-900 font-display bg-purple-200' >
                 <BsPersonFill />
             </Link>
         </div>

@@ -23,10 +23,6 @@ const Blog = () => {
     const tempuser = localStorage.getItem('user')
     const user = JSON.parse(tempuser)
 
-    // function removeApostrophes(str) {
-    //     return str.split("'").join("");
-    // }
-
     const deleteBlog = async (id) => {
         console.log(id);
         try {
@@ -82,6 +78,7 @@ const Blog = () => {
     const { images, content, title } = blog
     const newTitle = title
     const newContent = content
+    // const images = [imagesUrl]
 
     return (
         <article className="min-h-screen bg-purple-200 flex p-10">
@@ -89,7 +86,7 @@ const Blog = () => {
                 <div className="flex gap-3 items-center">
                     <h1 className="text-[35px] font-[800] mb-6">{newTitle}</h1>
                     {
-                        user?.accountType === 'Admin' ? (
+                        user?.accountType === 'Admin' || user?.accountType === 'SuperAdmin' ? (
                             <>
                                 <Link to={`/updateBlog/${id}`} className="p-2 rounded-md bg-green-800 hover:bg-green-700 min-h-[30px] flex justify-center items-center -translate-y-2 text-center text-white font-[500] text-[12px] md:text-[16px]">Update blog</Link>
                                 <Link className="p-2 rounded-md bg-red-800 hover:bg-red-700 min-h-[30px] flex justify-center items-center -translate-y-2 text-center text-white font-[500] text-[12px] md:text-[16px]" onClick={() => deleteBlog(id)}>

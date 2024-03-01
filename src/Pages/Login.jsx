@@ -31,7 +31,7 @@ const Login = () => {
       console.log(user)
       setRequestLoader(false)
       // Save the token in localStorage or a secure cookie
-      localStorage.setItem("user",JSON.stringify(user));
+      localStorage.setItem("user", JSON.stringify(user));
       if (user.approved) {
         toast.success('Login successfull')
         navigate('/')
@@ -44,7 +44,7 @@ const Login = () => {
   };
 
   return (
-    <div className='bg-gradient-to-r from-purple-500 to-voilet-500 min-h-screen flex items-center justify-center flex-col'>
+    <section className='bg-gradient-to-r from-purple-500 to-voilet-500 min-h-screen flex items-center justify-center flex-col'>
       <div className='p-4 bg-white rounded-md min-h-[380px] w-[300px]'>
         <h2 className='font-[600] text-[35px] text-center mb-[20px]'>Login</h2>
         <form onSubmit={handleLogin} className='flex flex-col gap-3'>
@@ -76,15 +76,15 @@ const Login = () => {
           <button
             type="submit"
             className='p-2 bg-purple-700 rounded-md hover:bg-purple-400 text-white text-center flex items-center justify-center'>
-           {
-              requestLoader ? <SmallLoader/> : <>Login</>
+            {
+              requestLoader ? <SmallLoader /> : <>Login</>
             }
-            </button>
+          </button>
         </form>
         <p className='text-[14px] mt-[40px]'>Not a user, <Link to='/signup' className='text-blue-700 text-[14px]'>Signup</Link></p>
         <p className='text-[14px] mt-[10px]'>Back to <Link to='/' className='text-blue-700 text-[14px]'>Home</Link></p>
       </div>
-    </div>
+    </section>
   );
 };
 

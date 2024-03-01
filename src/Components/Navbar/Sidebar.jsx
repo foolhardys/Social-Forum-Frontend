@@ -7,6 +7,9 @@ import { NavLinks } from "../../Utils/Constant";
 const Sidebar = () => {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+    const tempuser = localStorage.getItem('user')
+    const user = JSON.parse(tempuser)
+
 
     return (
         <div className='w-full p-4 justify-center lg:hidden items-center bg-purple-100/90 h-[60px] flex-col'>
@@ -27,7 +30,9 @@ const Sidebar = () => {
                     )
                 })}
                 <li className='capitalize'>
-                    <NavLink to='/login' className='block text-purple-900 font-semibold p-2 transition text-[20px] text-center mx-1 hover:text-gray-800 rounded-md hover:translate-x-1 hover:font-[700] hover:bg-purple-200'>Login</NavLink>
+                    <NavLink to={user ? `/user` : `/login`} className='block text-purple-900 font-semibold p-2 transition text-[20px] text-center mx-1 hover:text-gray-800 rounded-md hover:translate-x-1 hover:font-[700] hover:bg-purple-200'>
+                        {user ? 'User Details' : 'Login'}
+                    </NavLink>
                 </li>
                 <button className='z-20 absolute top-[35px] right-[30px] hover:rotate-12 hover:scale-110' onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                     <AiOutlineClose className='text-3xl text-red-700 font-bold ' />

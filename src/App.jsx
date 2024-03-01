@@ -18,6 +18,11 @@ import Dashboard from "./Pages/Dashboard"
 import CreateResource from "./Pages/CreateResource"
 import CreateBlog from "./Pages/CreateBlog"
 import UpdateBlog from "./Pages/UpdateBlog"
+import UpdateResource from "./Pages/UpdateResource"
+import CreateQuestion from "./Pages/CreateQuestion"
+import UpdateQuestion from "./Pages/UpdateQuestion"
+import User from './Pages/User'
+import UpdateUser from "./Pages/UpdateUser"
 
 function App() {
 
@@ -35,16 +40,21 @@ function App() {
         <Route path='createResource' element={<CreateResource />} />
         <Route path='createBlog' element={<CreateBlog />} />
         <Route path='updateBlog/:id' element={<UpdateBlog />} />
+        <Route path='updateResource/:id' element={<UpdateResource />} />
+        <Route path='updateQuiz/:id' element={<UpdateQuestion />} />
+        <Route path='createQuestion' element={<CreateQuestion />} />
         <Route path="*" element={<Error />} />
       </Route>
       <Route path='/login' element={<Login />} />
+      <Route path='/updateUser' element={<UpdateUser />} />
+      <Route path='/user' element={<User />} />
       <Route path='/signup' element={<Signup />} />
       <Route path='/forget-password' element={<ForgetPassword />} />
       <Route path='/login/update-password/:id' element={<UpdatePassword />} />
       <Route element={<PrivateRoute>
         <Dashboard></Dashboard>
       </PrivateRoute>} >
-        <Route path="/dashboard/about" element={<Home/>}></Route>
+        <Route path="/dashboard/about" element={<Home />}></Route>
       </Route>
     </Routes>
   )

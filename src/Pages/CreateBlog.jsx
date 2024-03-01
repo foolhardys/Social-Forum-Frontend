@@ -7,14 +7,11 @@ import SmallLoader from "../Components/SmallLoader";
 const createBlog = import.meta.env.VITE_API_URL + '/createBlog'
 
 const CreateBlog = () => {
-
-  const [formData, setFormData] = useState({
-    title: '',
-    content: '',
-    category: 'blog',
-    thumbnail: null,
-    images: [],
-  });
+  const [category, setCategory] = useState('blog')
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [thumbnail, setThumbnail] = useState(null);
+  const [images, setImages] = useState([]);
   const [requestLoader, setRequestLoader] = useState(false)
   const navigate = useNavigate()
   const tempuser = localStorage.getItem('user')
@@ -22,48 +19,33 @@ const CreateBlog = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    if (name === 'title') {
+      setTitle(value)
+    }
+    if (name === 'content') {
+      setContent(value)
+    }
   };
 
-
-
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-
-    if (files.length > 1) {
-      const images = [];
-      for (let i = 0; i < files.length; i++) {
-        images.push(files[i]);
+  const handleImagesChange = (event) => {
+    Array.from(event.target.files).map((image) => {
+      if (image.size > 4000000) {
+        toast.error('File size should be less than 4mb')
       }
-      console.log(images);
-      setFormData({
-        ...formData,
-        [name]: images,
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: files[0],
-      });
-  }
-}
+      return
+    })
+    setImages(event.target.files);
+    console.log(event.target.files);
+    console.log(images);
+    console.log(Array.from(images));
+  };
 
-
-const handleFilesChange = (e)=>{
-  const {name , files} = e.target 
-  const images = Array.from(files)
-console.log(images);
-  setFormData({
-    ...formData,
-    [name] : images
-  })
-}
-
-
-
+  const handleThumbnailChange = (event) => {
+    if (event.target.files[0].size > 4000000) {
+      toast.error('File size should be less than 4mb')
+    }
+    setThumbnail(event.target.files[0]);
+  };
 
   const handleCreateBlog = async (e) => {
     e.preventDefault();
@@ -71,20 +53,18 @@ console.log(images);
     try {
       setRequestLoader(true)
       const token = user.token
-      if (!formData.title || !formData.content || !formData.thumbnail || !formData.images) {
+      if (!title || !content) {
         toast.error('Enter all fields')
       }
 
-      const formDataWithFiles = new FormData();
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'thumbnail' || key === 'images') {
-          formDataWithFiles.append(key, value);
-        } else {
-          formDataWithFiles.append(key, JSON.stringify(value));
-        }
-      });
-      console.log(formData);
-
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("category", category);
+      formData.append('thumbnail', thumbnail);
+      for (let i = 0; i < images.length; i++) {
+        formData.append(`images`, images[i])
+      }
       const request = await axios.post(createBlog, formData,
         {
           headers: {
@@ -98,7 +78,7 @@ console.log(images);
       navigate('/blogs')
     } catch (error) {
       setRequestLoader(false)
-      toast.error(error.message)
+      toast.error('Failed to create blog')
       throw new Error(error.message || "Failed to create blog")
     }
   };
@@ -114,7 +94,7 @@ console.log(images);
         <div className="flex flex-col">
           <label htmlFor="title" className="text-[18px] font-[500]">Title</label>
           <input
-            value={formData.title}
+            value={title}
             type="text"
             name="title"
             id="title"
@@ -125,7 +105,7 @@ console.log(images);
         <div className="flex flex-col">
           <label htmlFor="content" className="text-[18px] font-[500]">Content</label>
           <textarea
-            value={formData.content}
+            value={content}
             name="content"
             id="content"
             className="h-[300px] w-full resize-none p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
@@ -139,7 +119,7 @@ console.log(images);
             name="thumbnail"
             id="thumbnail"
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleThumbnailChange}
             required />
         </div>
         <div className="flex flex-col">
@@ -149,9 +129,8 @@ console.log(images);
             name="images"
             id="images"
             accept="image/*"
-            onChange={handleFilesChange}
-            multiple
-            required />
+            onChange={handleImagesChange}
+            multiple />
         </div>
         <button
           type="submit"
