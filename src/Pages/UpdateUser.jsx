@@ -7,11 +7,12 @@ import Error from "./Error"
 import toast from "react-hot-toast"
 
 const Url = import.meta.env.VITE_API_URL + '/updateUserDetails'
+const baseUrl = import.meta.env.VITE_API_URL + '/getUserDetails'
 
 const UpdateUser = () => {
 
     const tempuser = localStorage.getItem('user')
-    const user = JSON.parse(tempuser)
+    const tempUser = JSON.parse(tempuser)
     const [email, setEmail] = useState('')
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -20,17 +21,44 @@ const UpdateUser = () => {
     const [requestLoader, setRequestLoader] = useState(false)
     const navigate = useNavigate()
 
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             setIsLoading(true)
+    //             setEmail(user?.email)
+    //             setFirstName(user?.firstName)
+    //             setLastName(user?.lastName)
+    //             setIsLoading(false)
+    //         } catch (error) {
+    //             setIsLoading(false)
+    //             setError(error)
+    //             toast.error(error?.response?.data?.message)
+    //         }
+
+    //     }
+    //     fetchData()
+    // }, [])
+
     useEffect(() => {
         const fetchData = async () => {
+            const token = tempUser.token
             try {
                 setIsLoading(true)
-                setEmail(user?.email)
-                setFirstName(user?.firstName)
-                setLastName(user?.lastName)
+                const res = await axios.get(baseUrl,
+                    {
+                        headers: {
+                            "Authorization": `Bearer ${token}`,
+                        }
+                    })
+                const data = res.data.data
+                setEmail(data?.email)
+                setFirstName(data?.firstName)
+                setLastName(data?.lastName)
                 setIsLoading(false)
             } catch (error) {
                 setIsLoading(false)
                 setError(error)
+                toast.error(error?.response?.data?.message)
             }
 
         }
@@ -41,7 +69,7 @@ const UpdateUser = () => {
         e.preventDefault()
         try {
             setRequestLoader(true)
-            const token = user.token
+            const token = tempUser.token
             const data = {
                 email,
                 firstName,
@@ -58,7 +86,7 @@ const UpdateUser = () => {
             navigate('/user')
         } catch (error) {
             setRequestLoader(false)
-            toast.error(error.message)
+            toast.error(error?.response?.data?.message)
         }
     }
 

@@ -40,6 +40,7 @@ const UpdateBlog = () => {
                 setIsLoading(false)
             } catch (error) {
                 setError(error)
+                toast.error(error?.response?.data?.message)
             }
 
         }
@@ -102,7 +103,7 @@ const UpdateBlog = () => {
             navigate('/blogs')
         } catch (error) {
             setRequestLoader(false)
-            toast.error(error.message)
+            toast.error(error?.response?.data?.message)
         }
     };
 

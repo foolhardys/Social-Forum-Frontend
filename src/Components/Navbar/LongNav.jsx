@@ -1,7 +1,9 @@
 import { NavLinks } from "../../Utils/Constant";
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
+// const ActiveNavbarContext = createContext();
+
 
 const LongNav = () => {
 
@@ -18,13 +20,16 @@ const LongNav = () => {
             <ul className='min-w-[680px] lg:flex justify-between capitalize p-2'>
                 {NavLinks.map((navlink) => {
                     const { id, text, url } = navlink
-
                     return (
                         <NavLink to={url} key={id} className={id === active ? 'text-purple-900 font-[600] p-1 lg:text-[16px] transition text-[20px] mx-1 mt-2 hover:text-gray-800 border-b-[3px] border-b-purple-900' : 'text-purple-900 font-[600] p-1 lg:text-[16px] transition text-[20px] mx-1 mt-2 hover:text-gray-800 hover:border-b-[3px] hover:border-b-purple-900'} onClick={() => setActive(id)}>
                             {text}
                         </NavLink>
                     )
                 })}
+                {
+                    user?.accountType === 'SuperAdmin' ? <NavLink to='/dashboard' className="p-2 rounded-md bg-blue-800 hover:bg-blue-600 min-h-[30px] flex justify-center items-center text-center text-white font-[500] text-[12px] md:text-[16px]" >Dashboard</NavLink> : <></>
+                }
+
             </ul>
             <Link to={user ? `/user` : `/login`} className='text-center border-2 rounded-full border-purple-900 lg:text-[30px] text-[25px] font-[600] p-1 text-purple-900 font-display bg-purple-200' >
                 <BsPersonFill />

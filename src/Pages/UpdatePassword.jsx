@@ -27,8 +27,7 @@ const UpdatePassword = () => {
             toast.success('Password updated')
             navigate('/login')
         } catch (error) {
-            console.error('Signup failed', error);
-            toast.error('Some error ocurred', error)
+            toast.error(error?.response?.data?.message)
         }
     };
 

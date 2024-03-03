@@ -39,6 +39,7 @@ const UpdateQuestion = () => {
             } catch (error) {
                 setIsLoading(false)
                 setError(error)
+                toast.error(error?.response?.data?.message)
             }
 
         }
@@ -95,7 +96,7 @@ const UpdateQuestion = () => {
             navigate('/quiz')
         } catch (error) {
             setRequestLoader(false)
-            toast.error(error.message)
+            toast.error(error?.response?.data?.message)
         }
     }
 

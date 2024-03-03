@@ -75,8 +75,7 @@ const Resources = () => {
       navigate('/resources')
     } catch (error) {
       setRequestLoader(false)
-      toast.error(error.message)
-      console.log(error);
+      toast.error(error?.response?.data?.message)
     }
   }
 
@@ -93,6 +92,7 @@ const Resources = () => {
         setIsLoading(false)
       } catch (error) {
         setError(error)
+        toast.error(error?.response?.data?.message)
       }
 
     }

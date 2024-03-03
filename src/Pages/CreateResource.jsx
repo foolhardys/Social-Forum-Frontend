@@ -78,7 +78,7 @@ const CreateResource = () => {
       navigate('/resources')
     } catch (error) {
       setRequestLoader(false)
-      toast.error(error.message)
+      toast.error(error?.response?.data?.message)
     }
   }
 

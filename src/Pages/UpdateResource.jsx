@@ -76,7 +76,7 @@ const UpdateResource = () => {
             navigate('/resources')
         } catch (error) {
             setRequestLoader(false)
-            toast.error(error.message)
+            toast.error(error?.response?.data?.message)
         }
     }
 
@@ -95,6 +95,7 @@ const UpdateResource = () => {
             } catch (error) {
                 setIsLoading(false)
                 setError(error)
+                toast.error(error?.response?.data?.message)
             }
 
         }

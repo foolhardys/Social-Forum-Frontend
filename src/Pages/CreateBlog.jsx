@@ -78,8 +78,7 @@ const CreateBlog = () => {
       navigate('/blogs')
     } catch (error) {
       setRequestLoader(false)
-      toast.error('Failed to create blog')
-      throw new Error(error.message || "Failed to create blog")
+      toast.error(error?.response?.data?.message)
     }
   };
 

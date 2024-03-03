@@ -29,6 +29,13 @@ const Sidebar = () => {
                         </li>
                     )
                 })}
+                {
+                    user?.accountType === 'SuperAdmin' ? (<li className='capitalize'>
+                        <NavLink to='dashboard' className='block text-purple-900 font-semibold p-2 transition text-[20px] text-center mx-1 hover:text-gray-800 rounded-md hover:translate-x-1 hover:font-[700] hover:bg-purple-200'>
+                            dashboard
+                        </NavLink>
+                    </li>) : <></>
+                }
                 <li className='capitalize'>
                     <NavLink to={user ? `/user` : `/login`} className='block text-purple-900 font-semibold p-2 transition text-[20px] text-center mx-1 hover:text-gray-800 rounded-md hover:translate-x-1 hover:font-[700] hover:bg-purple-200'>
                         {user ? 'User Details' : 'Login'}

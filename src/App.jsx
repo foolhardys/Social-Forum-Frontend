@@ -43,6 +43,7 @@ function App() {
         <Route path='updateResource/:id' element={<UpdateResource />} />
         <Route path='updateQuiz/:id' element={<UpdateQuestion />} />
         <Route path='createQuestion' element={<CreateQuestion />} />
+        <Route path='dashboard' element={<Dashboard />} />
         <Route path="*" element={<Error />} />
       </Route>
       <Route path='/login' element={<Login />} />

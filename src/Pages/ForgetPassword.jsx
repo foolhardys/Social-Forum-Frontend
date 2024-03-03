@@ -34,8 +34,7 @@ const ForgetPassword = () => {
             }
             setEmailSent(true)
         } catch (error) {
-            console.error('Login failed', error);
-            toast.error('Some error ocurred')
+            toast.error(error?.response?.data?.message)
         }
     };
 

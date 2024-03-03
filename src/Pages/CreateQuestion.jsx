@@ -73,7 +73,7 @@ const CreateQuestion = () => {
             navigate('/quiz')
         } catch (error) {
             setRequestLoader(false)
-            toast.error(error.message)
+            toast.error(error?.response?.data?.message)
         }
     }
 

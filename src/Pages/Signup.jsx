@@ -30,15 +30,11 @@ const Signup = () => {
         confirmPassword
       });
       setRequestLoader(false)
-
-
-      // Save the token in localStorage or a secure cookie
       toast.success('Signup successfull')
       navigate('/login')
     } catch (error) {
-      console.error('Signup failed', error);
       setRequestLoader(false)
-      toast.error('User already exists , Login')
+      toast.error(error?.response?.data?.message)
     }
   };
 

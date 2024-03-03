@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Loading from "./Loading"
 import Error from './Error'
+import toast from "react-hot-toast"
 
 const baseUrl = import.meta.env.VITE_API_URL + '/getAllBlogs'
 
@@ -27,6 +28,7 @@ const Blogs = () => {
       } catch (error) {
         setIsLoading(false)
         setError(error)
+        toast.error(error?.response?.data?.message)
       }
 
     }

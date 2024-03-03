@@ -1,10 +1,42 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom"
+import Loading from "./Loading";
+import Error from './Error'
+
+const baseUrl = import.meta.env.VITE_API_URL + '/getUserDetails'
 
 const User = () => {
   const tempuser = localStorage.getItem('user')
-  const user = JSON.parse(tempuser)
-  console.log(user);
+  const tempUser = JSON.parse(tempuser)
+  // console.log(user);
+  const [isLoading, setIsLoading] = useState(false)
+  const [user, setUser] = useState({})
+  const [error, setError] = useState(null)
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = tempUser.token
+      try {
+        setIsLoading(true)
+        const res = await axios.get(baseUrl,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`,
+            }
+          })
+        const data = res.data.data
+        setUser(data)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false)
+        setError(error)
+        toast.error(error?.response?.data?.message)
+      }
+
+    }
+    fetchData()
+  }, [])
 
   const navigate = useNavigate()
 
@@ -19,6 +51,14 @@ const User = () => {
       toast.error("Logout failed");
     }
     navigate('/')
+  }
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+  if (error) {
+    return <Error />
   }
 
   return (

@@ -70,7 +70,7 @@ const Quiz = () => {
       )
       toast.success('Question deleted, Please refresh')
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error?.response?.data?.message)
       console.log(error);
     }
   }
@@ -88,6 +88,7 @@ const Quiz = () => {
       } catch (error) {
         setIsLoading(false)
         setError(error)
+        toast.error(error?.response?.data?.message)
       }
 
     }

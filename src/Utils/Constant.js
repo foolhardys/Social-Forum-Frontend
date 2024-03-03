@@ -1,5 +1,3 @@
-import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
-
 export const NavLinks = [
     {
         id: 1,
@@ -35,11 +33,6 @@ export const NavLinks = [
         id: 7,
         text: 'Contact Us',
         url: '/contact'
-    },
-    {
-        id: 8 ,
-        text: 'Dashboard',
-        url: '/dasboard'
     }
 ]
 
