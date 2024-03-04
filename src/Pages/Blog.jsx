@@ -101,7 +101,7 @@ const Blog = () => {
                 <div className="w-full">
                     <Slider images={images} />
                 </div>
-                <p className="mt-4">{newContent}</p>
+                <p className="mt-4 text-[18px]">{newContent}</p>
             </div>
         </article>
     )

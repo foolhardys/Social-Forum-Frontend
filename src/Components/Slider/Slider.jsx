@@ -25,7 +25,7 @@ const Slider = ({ images }) => {
         >
             {pics.map((pic, index) => {
                 return (
-                    <SwiperSlide key={index} className='flex justify-center'><img className='min-h-[250px] rounded-md shadow-sm lg:w-full' src={pic} alt="" /></SwiperSlide>
+                    <SwiperSlide key={index} className='flex justify-center'><img className='h-[550px] rounded-md shadow-sm lg:w-full' src={pic} alt="" /></SwiperSlide>
                 )
             })}
         </Swiper>

@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom"
 import doc from '../assets/Pics/doc.png'
 import link from '../assets/Pics/link.png'
 import toast from "react-hot-toast"
+// import { LinkPreview } from '@dhaiwat10/react-link-preview';
 
 const baseUrl = import.meta.env.VITE_API_URL + '/getAllResources'
 const deleteUrl = import.meta.env.VITE_API_URL + '/deleteResource'
@@ -22,26 +23,21 @@ const Resources = () => {
   const user = JSON.parse(tempuser)
   const navigate = useNavigate()
 
-  // const handleFilterButtonClick = (selectedCategory) => {
-  //   if (selectedFilters.includes(selectedCategory)) {
-  //     let filters = selectedFilters.filter((el) => el !== selectedCategory);
-  //     setSelectedFilters(filters);
-  //   } else {
-  //     setSelectedFilters([...selectedFilters, selectedCategory]);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      setIsLoading(true)
+      const res = await axios.get(baseUrl)
+      const data = res.data.data
+      console.log(data);
+      setFilteredItems(data)
+      setItems(data)
+      setIsLoading(false)
+    } catch (error) {
+      setError(error)
+      toast.error(error?.response?.data?.message)
+    }
 
-  // const filterItems = () => {
-  //   if (selectedFilters.length > 0) {
-  //     let tempItems = selectedFilters.map((selectedCategory) => {
-  //       let temp = items.filter((item) => item.category === selectedCategory);
-  //       return temp;
-  //     });
-  //     setFilteredItems(tempItems.flat());
-  //   } else {
-  //     setFilteredItems([...items]);
-  //   }
-  // };
+  }
 
   const handleFilterButtonClick = (selectedCategory) => {
     setSelectedFilters([selectedCategory]);
@@ -71,8 +67,9 @@ const Resources = () => {
         }
       )
       setRequestLoader(false)
-      toast.success('Resource deleted, Please refresh')
+      toast.success('Resource deleted')
       navigate('/resources')
+      fetchData()
     } catch (error) {
       setRequestLoader(false)
       toast.error(error?.response?.data?.message)
@@ -81,21 +78,6 @@ const Resources = () => {
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        const res = await axios.get(baseUrl)
-        const data = res.data.data
-        console.log(data);
-        setFilteredItems(data)
-        setItems(data)
-        setIsLoading(false)
-      } catch (error) {
-        setError(error)
-        toast.error(error?.response?.data?.message)
-      }
-
-    }
     fetchData()
   }, [])
 
@@ -108,7 +90,7 @@ const Resources = () => {
 
   return (
     <section className="min-h-screen bg-purple-200 p-4 flex flex-col items-center justify-center">
-      <h1 className="text-[35px] font-[700]">Resources</h1>
+      <h1 className="text-[35px] font-[700] mb-5">Resources</h1>
       <div className="flex md:justify-between justify-center md:flex-row flex-col w-full lg:w-[1020px] min-h-screen items-center">
         <div className="md:w-1/3 w-full md:h-screen  p-5">
           <h2 className="text-[20px] font-[700]">Categories</h2>
@@ -131,7 +113,7 @@ const Resources = () => {
           isLoading ? <Loading /> : (
             <div className="md:w-2/3 w-full min-h-[80vh] bg-purple-200 flex md:flex-row md:flex-wrap flex-col gap-4">
               {filteredItems.map((item, idx) => (
-                <div key={`items-${idx}`} className="w-full lg:w-[300px] bg-purple-300 shadow-lg rounded-md ring-1 ring-offset-purple-400 p-1 min-h-[250px] md:h-[300px]">
+                <div key={`items-${idx}`} className="w-full flex items-center justify-center flex-col lg:w-[300px] bg-purple-300 shadow-lg rounded-md ring-1 ring-offset-purple-400 p-1 min-h-[250px] md:h-[300px]">
                   {
                     item.dataType === 'file' ? (
                       <img src={item?.resourseUrl || doc} className="w-full h-[200px]" alt="" />

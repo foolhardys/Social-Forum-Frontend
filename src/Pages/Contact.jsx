@@ -16,10 +16,10 @@ const Contact = () => {
           </div>
           <div className=" min-h-[250px] flex flex-col p-2">
             <div className="md:flex-row flex-col flex md:gap-2 gap-6 my-4">
-              <input type="text" id="name" name="name" className="p-2 rounded-full border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Name" />
-              <input type="email" id="email" name="email" className="p-2 rounded-full border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Email" />
+              <input type="text" id="name" name="name" className="p-2 rounded-md border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Name" />
+              <input type="email" id="email" name="email" className="p-2 rounded-md border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Email" />
             </div>
-            <input type="tel" id="phone" name="phone" className="p-2 rounded-full border-2 border-white my-4 text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Number" />
+            <input type="tel" id="phone" name="phone" className="p-2 rounded-md border-2 border-white my-4 text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Number" />
             <textarea id="message" name="message" placeholder="How can we help you ??" className=" resize-none h-[100px] text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3 rounded-lg mt-4 p-2"></textarea>
             <button type="submit" className="bg-purple-700 p-2 rounded-md my-8 text-white text-[18px] hover:bg-purple-500 transition">Send Message</button>
           </div>

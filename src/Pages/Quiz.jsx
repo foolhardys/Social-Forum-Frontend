@@ -22,6 +22,23 @@ const Quiz = () => {
   const tempuser = localStorage.getItem('user')
   const user = JSON.parse(tempuser)
 
+  const fetchData = async () => {
+    try {
+      setIsLoading(true)
+      const res = await axios.get(quizUrl)
+      const data = res.data.data
+      console.log(data);
+      setFilteredItems(data)
+      setItems(data)
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      setError(error)
+      toast.error(error?.response?.data?.message)
+    }
+
+  }
+
   const handleChange = (event, questionId) => {
     setSelectedAnswers({ ...selectedAnswers, [questionId]: event.target.value });
   };
@@ -68,7 +85,8 @@ const Quiz = () => {
           }
         }
       )
-      toast.success('Question deleted, Please refresh')
+      toast.success('Question deleted')
+      fetchData()
     } catch (error) {
       toast.error(error?.response?.data?.message)
       console.log(error);
@@ -76,22 +94,6 @@ const Quiz = () => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        const res = await axios.get(quizUrl)
-        const data = res.data.data
-        console.log(data);
-        setFilteredItems(data)
-        setItems(data)
-        setIsLoading(false)
-      } catch (error) {
-        setIsLoading(false)
-        setError(error)
-        toast.error(error?.response?.data?.message)
-      }
-
-    }
     fetchData()
   }, [])
 

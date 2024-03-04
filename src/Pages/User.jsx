@@ -14,6 +14,7 @@ const User = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState({})
   const [error, setError] = useState(null)
+
   useEffect(() => {
     const fetchData = async () => {
       const token = tempUser.token
@@ -31,7 +32,8 @@ const User = () => {
       } catch (error) {
         setIsLoading(false)
         setError(error)
-        toast.error(error?.response?.data?.message)
+        toast.error(error?.response?.data?.message, 'Login again')
+        console.log(error);
       }
 
     }
