@@ -16,6 +16,30 @@ const Dashboard = () => {
   const [users, setUsers] = useState([])
   const [error, setError] = useState(null)
 
+  const fetchData = async () => {
+
+    try {
+      const token = user.token
+      setIsLoading(true)
+      const res = await axios.get(baseUrl,
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          }
+        })
+      const data = res.data.data
+      console.log(data);
+      const Users = data.filter(user => user?.accountType === "Admin");
+      setUsers(Users)
+      console.log(users);
+      setIsLoading(false)
+    } catch (error) {
+      setIsLoading(false)
+      setError(error)
+    }
+
+  }
+
   const handleUserApproval = async (id) => {
     console.log(id);
     const token = user.token
@@ -32,20 +56,22 @@ const Dashboard = () => {
         }
         )
         toast.success('User approved')
-      }
-      data = {
-        userId: id, approve: false
-      }
-      await axios.put(approveUrl, data, {
-        headers: {
-          "Authorization": `Bearer ${token}`,
+        fetchData()
+      } else {
+        data = {
+          userId: id, approve: false
         }
+        await axios.put(approveUrl, data, {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          }
+        }
+        )
+        toast.success('User disapproved')
+        fetchData()
       }
-      )
-      toast.success('User disapproved')
-
-    } catch (res) {
-      toast.error(res.message)
+    } catch (error) {
+      toast.error(error?.response?.data?.message)
     }
   }
 
@@ -63,36 +89,14 @@ const Dashboard = () => {
           }
         })
       toast.success('User deleted')
+      fetchData()
     } catch (error) {
-      console.log(error.response);
-      // toast.error(error.message)
+      toast.error(error?.response?.data?.message)
     }
   }
 
 
   useEffect(() => {
-    const fetchData = async () => {
-      const token = user.token
-      try {
-        setIsLoading(true)
-        const res = await axios.get(baseUrl,
-          {
-            headers: {
-              "Authorization": `Bearer ${token}`,
-            }
-          })
-        const data = res.data.data
-        console.log(data);
-        const Users = data.filter(user => user?.accountType === "Admin");
-        setUsers(Users)
-        console.log(users);
-        setIsLoading(false)
-      } catch (error) {
-        setIsLoading(false)
-        setError(error)
-      }
-
-    }
     fetchData()
   }, [])
 

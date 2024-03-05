@@ -1,6 +1,7 @@
 import { NavLinks, SocialLinks } from "../../Utils/Constant"
 import { Link, NavLink } from "react-router-dom"
-import logo from './logo.jpg'
+import logo from './SocialForum.png'
+import logo2 from './zorway_logo.png'
 import { useContext, useEffect, useState } from "react";
 import { ActiveLinkContext } from "../../Context/ActiveLinkContext";
 
@@ -19,13 +20,14 @@ const Footer = () => {
             setInitialActiveLinkId(activeLinkId); // Store initial state on other pages
         }
     }, []);
-    
+
     return (
         <footer className="flex w-full bg-black/95 md:flex-row flex-col min-h-[300px]">
-            <div className="text-white flex-1">
+            <div className="text-white flex-1 flex items-center justify-center flex-col">
                 <img src={logo} alt="" className="h-[170px]" />
+                <p className="text-white my-8 font-[600]">Telangana Social Studies Teachers Forum</p>
             </div>
-            <ul className="flex-1 md:px-12 px-3 py-4">
+            <ul className="flex-1 md:px-12 px-3 py-4 flex flex-col items-start justify-center">
                 <h1 className="text-gray-100 font-[700] mb-[30px] text-[16px]">Explore!!</h1>
                 <div className="flex flex-col">
                     {NavLinks.map((navlink) => {
@@ -42,7 +44,7 @@ const Footer = () => {
                     })}
                 </div>
             </ul>
-            <ul className="md:px-12 px-3 py-4 flex-1">
+            <ul className="py-4 flex-1 flex flex-col items-start justify-center">
                 <h1 className="text-gray-100 font-[700] mb-[30px] text-[16px]">Social</h1>
                 {SocialLinks.map((sociallink) => {
                     const { id, name, url } = sociallink
@@ -53,8 +55,11 @@ const Footer = () => {
                     )
                 })}
             </ul>
-            <div className="text-white border-l-2 border-gray-200/80 flex-1 p-2">
-                designed and developed by zorway
+            <div className="text-white flex-1 flex flex-col items-center justify-start p-5">
+            <img src={logo2} alt=""/>
+                <h1 className="text-white font-[600]">Website and Designs By : <a href="https://zorway.in/" className="underline font-[700]">Zorway</a> </h1>
+                <p className="text-white font-[400] text-left">Contact us: </p>
+                <p className="text-white font-[400]">Phone: +919100545426 <br /> Whatsapp: +918770741112 <br /> Email: contact@zorway.in</p>
             </div>
         </footer>
     )

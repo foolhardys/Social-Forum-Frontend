@@ -34,10 +34,10 @@ const CreateBlog = () => {
       }
       return
     })
+    if (Array.from(event.target.files).length > 3) {
+      toast.error('You cannot upload more than 3 files')
+    }
     setImages(event.target.files);
-    console.log(event.target.files);
-    console.log(images);
-    console.log(Array.from(images));
   };
 
   const handleThumbnailChange = (event) => {
