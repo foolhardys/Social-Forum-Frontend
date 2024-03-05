@@ -39,6 +39,11 @@ const Quiz = () => {
 
   }
 
+  function shuffleArray(array) {
+    return array.sort(() => Math.random() - 0.5);
+  }
+
+
   const handleChange = (event, questionId) => {
     setSelectedAnswers({ ...selectedAnswers, [questionId]: event.target.value });
   };
@@ -68,7 +73,9 @@ const Quiz = () => {
     const selectedCategory = selectedFilters[0];
     if (selectedCategory) {
       const filteredItems = items.filter((item) => item.category === selectedCategory);
-      setFilteredItems(filteredItems);
+      const shuffledItems = shuffleArray(filteredItems.slice());
+      console.log(shuffledItems);
+      setFilteredItems(shuffledItems);
     } else {
       setFilteredItems([...items]);
     }
@@ -113,10 +120,10 @@ const Quiz = () => {
   return (
     <section className="min-h-screen bg-purple-200 p-4 flex flex-col items-center justify-center">
       <h1 className="text-[35px] font-[700]">Take a Quiz!!!</h1>
-      <div className="flex md:justify-between justify-center md:flex-row flex-col w-full lg:w-[980px] min-h-screen">
-        <div className="md:w-1/3 w-full md:h-screen p-5 h-[550px]">
+      <div className="flex flex-col w-full lg:w-[980px] items-center p-5">
+        <div className="w-full p-5">
           <h2 className="text-[20px] font-[700]">Class</h2>
-          <div className="flex flex-col flex-wrap h-screen mt-[30px] gap-4">
+          <div className="flex flex-row flex-wrap mt-[30px] gap-4">
             {QuizCategories.map((category, index) => {
               return (
                 <button
@@ -133,7 +140,7 @@ const Quiz = () => {
             }
           </div>
         </div>
-        <div className="md:w-2/3 w-full min-h-screen bg-transparent">
+        <div className="w-full bg-transparent">
           {filteredItems.map((item, idx) => (
             <div key={`items-${idx}`} className="w-full p-2">
               <p className="text-[16px]">({idx + 1}). {item.question}</p>

@@ -2,7 +2,7 @@ import image from './pic-3.jpg'
 
 const AboutHero = () => {
     return (
-        <section className="flex md:flex-row flex-col max-w-[1080px] p-4 gap-4 my-[25px]">
+        <section className="flex md:flex-row flex-col max-w-[980px] p-4 gap-4 my-[25px]">
             <div className="w-7/12">
                 <h1 className="lg:text-[60px] md:text-[45px] text-[55px] leading-tight font-serif my-10">G.Rathanga Pani Reddy</h1>
                 <h2 className="lg:text-[45px] md:text-[30px] text-[30px] leading-tight font-serif my-10">President , TSSTF</h2>

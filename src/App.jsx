@@ -23,6 +23,7 @@ import CreateQuestion from "./Pages/CreateQuestion"
 import UpdateQuestion from "./Pages/UpdateQuestion"
 import User from './Pages/User'
 import UpdateUser from "./Pages/UpdateUser"
+import ActiveLinkProvider from "./Context/ActiveLinkContext"
 
 function App() {
 

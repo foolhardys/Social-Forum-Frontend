@@ -91,10 +91,10 @@ const Resources = () => {
   return (
     <section className="min-h-screen bg-purple-200 p-4 flex flex-col items-center justify-center">
       <h1 className="text-[35px] font-[700] mb-5">Resources</h1>
-      <div className="flex md:justify-between justify-center md:flex-row flex-col w-full lg:w-[1020px] min-h-screen items-center">
-        <div className="md:w-1/3 w-full md:h-screen  p-5">
+      <div className="flex md:justify-between justify-center flex-col w-full lg:w-[980px] min-h-screen items-center">
+        <div className="w-full p-5">
           <h2 className="text-[20px] font-[700]">Categories</h2>
-          <div className="flex md:flex-col flex-row flex-wrap max-h-[400px] my-[30px] gap-4">
+          <div className="flex flex-row flex-wrap max-h-[400px] my-[30px] gap-4 w-[980px]">
             {Filters.map((category, index) => {
               return (
                 <button
