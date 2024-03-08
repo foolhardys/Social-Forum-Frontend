@@ -94,6 +94,6 @@ export const Questions = [
 ]
 
 
-export const Filters = ['Teacher Resources', 'Student Resources', 'E - Resources', 'Sample Papers', 'Career Guidance', 'Publications']
+export const Filters = ['Teacher Resources', 'Student Resources', 'E - Resources', 'Model Papers', 'Career Guidance', 'Publications']
 
 export const QuizCategories = ['6', '7', '8', '9', '10', '11', '12']

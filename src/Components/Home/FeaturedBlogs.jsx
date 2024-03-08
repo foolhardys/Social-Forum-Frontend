@@ -45,7 +45,7 @@ const FeaturedBlogs = () => {
     }
 
     return (
-        <section className="max-w-[1280px]  p-4 items-start flex flex-col">
+        <section className="max-w-[980px]  p-4 items-start flex flex-col">
             <h1 className="lg:text-[70px] md:text-[45px] text-[50px] leading-tight font-serif my-10 text-left w-full">Featured Blogs</h1>
             <div className="flex gap-4 mt-6 md:flex-row flex-col flex-wrap lg:w-[1080px]">
                 {blogs.map((blog) => (

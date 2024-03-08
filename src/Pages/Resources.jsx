@@ -6,7 +6,6 @@ import { Link, useNavigate } from "react-router-dom"
 import doc from '../assets/Pics/doc.png'
 import link from '../assets/Pics/link.png'
 import toast from "react-hot-toast"
-// import { LinkPreview } from '@dhaiwat10/react-link-preview';
 
 const baseUrl = import.meta.env.VITE_API_URL + '/getAllResources'
 const deleteUrl = import.meta.env.VITE_API_URL + '/deleteResource'
@@ -37,6 +36,20 @@ const Resources = () => {
       toast.error(error?.response?.data?.message)
     }
 
+  }
+  function convertToDateInMillis(dateString) {
+    try {
+    const dateObj = new Date(dateString);
+    if (isNaN(dateObj.getTime())) {
+      throw new Error("Invalid date string format.");
+    }
+    const currentTime = Date.now();
+    const twoDaysInMilliseconds = 2 * 24 * 60 * 60 * 1000;
+    return (currentTime - dateObj.getTime()) <= twoDaysInMilliseconds;
+    } catch (error) {
+      console.error("Error converting date:", error.message);
+      return null;
+    }
   }
 
   const handleFilterButtonClick = (selectedCategory) => {
@@ -111,9 +124,12 @@ const Resources = () => {
         </div>
         {
           isLoading ? <Loading /> : (
-            <div className="md:w-2/3 w-full min-h-[80vh] bg-purple-200 flex md:flex-row md:flex-wrap flex-col gap-4">
+            <div className="w-full min-h-[80vh] bg-purple-200 flex md:flex-row md:flex-wrap flex-col gap-4">
               {filteredItems.map((item, idx) => (
-                <div key={`items-${idx}`} className="w-full flex items-center justify-center flex-col lg:w-[300px] bg-purple-300 shadow-lg rounded-md ring-1 ring-offset-purple-400 p-1 min-h-[250px] md:h-[300px]">
+                <div key={`items-${idx}`} className="w-full flex items-center justify-center flex-col lg:w-[300px] bg-purple-300 shadow-lg rounded-md ring-1 ring-offset-purple-400 p-1 min-h-[250px] md:h-[300px] relative">
+                  {
+                    convertToDateInMillis(item?.createdAt) ? (<span className="absolute top-1 right-1 p-2 bg-green-700 rounded-md text-white">Newly added</span>):(<></>)
+                  }
                   {
                     item.dataType === 'file' ? (
                       <img src={item?.resourseUrl || doc} className="w-full h-[200px]" alt="" />

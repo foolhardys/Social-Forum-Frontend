@@ -186,7 +186,7 @@ const UpdateResource = () => {
                         <option className="text-[16px] p-1" value="Teacher Resources">Teacher Resources</option>
                         <option className="text-[16px] p-1" value="Student Resources">Student Resources</option>
                         <option className="text-[16px] p-1" value="E - Resources">E-Resources</option>
-                        <option className="text-[16px] p-1" value="Sample Papers">Sample Papers</option>
+                        <option className="text-[16px] p-1" value="Model Papers">Model Papers</option>
                         <option className="text-[16px] p-1" value="Career Guidance">Career Guidance</option>
                         <option className="text-[16px] p-1" value="Publications">Publications</option>
                     </select>
