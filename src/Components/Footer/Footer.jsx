@@ -44,19 +44,21 @@ const Footer = () => {
                     })}
                 </div>
             </ul>
-            <ul className="py-4 flex-1 flex flex-col items-start justify-center">
+            <ul className="flex-1 md:px-12 px-3 py-4 flex flex-col items-start justify-center">
                 <h1 className="text-gray-100 font-[700] mb-[30px] text-[16px]">Social</h1>
-                {SocialLinks.map((sociallink) => {
-                    const { id, name, url } = sociallink
-                    return (
-                        <li key={id} className='capitalize'>
-                            <a to={url} className='text-gray-400 font-semibold p-2 transition text-[12px] mt-2 hover:text-gray-300 rounded-md'> {name} </a>
-                        </li>
-                    )
-                })}
+                <div className="flex flex-col">
+                    {SocialLinks.map((sociallink) => {
+                        const { id, name, url } = sociallink
+                        return (
+                            <li key={id} className='capitalize'>
+                                <a to={url} className='text-gray-400 font-semibold p-2 transition text-[12px] mt-2 hover:text-gray-300 rounded-md'> {name} </a>
+                            </li>
+                        )
+                    })}
+                </div>
             </ul>
             <div className="text-white flex-1 flex flex-col items-center justify-start p-5">
-            <img src={logo2} alt=""/>
+                <img src={logo2} alt="" className="h-[150px]" />
                 <h1 className="text-white font-[600]">Website and Designs By : <a href="https://zorway.in/" className="underline font-[700]">Zorway</a> </h1>
                 <p className="text-white font-[400] text-left">Contact us: </p>
                 <p className="text-white font-[400]">Phone: +919100545426 <br /> Whatsapp: +918770741112 <br /> Email: contact@zorway.in</p>

@@ -12,7 +12,7 @@ const HomeHero = () => {
                 <Link to='/resources' className="bg-purple-700 rounded-md shadow-md p-2 text-lg text-white hover:bg-purple-500 transition md:my-0 my-4">Explore Resources</Link>
             </div>
             <div>
-                <img src={image} alt="image" />
+                <img src={image} className='h-[250px] md:h-fit' alt="image" />
             </div>
         </section>
     )
