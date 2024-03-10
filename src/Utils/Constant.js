@@ -12,7 +12,7 @@ export const NavLinks = [
     {
         id: 3,
         text: 'Resources',
-        url: '/resources'
+        url: '/resources',
     },
     {
         id: 4,

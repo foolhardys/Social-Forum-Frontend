@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { BsPersonFill } from "react-icons/bs";
 import { ActiveLinkContext } from "../../Context/ActiveLinkContext";
+import Dropdown from "./Dropdown";
 
 
 const LongNav = () => {
@@ -11,6 +12,8 @@ const LongNav = () => {
     // const location = useLocation();
     const { activeLinkId, handleLinkClick } = useContext(ActiveLinkContext);
     const [initialActiveLinkId, setInitialActiveLinkId] = useState(activeLinkId);
+    const [dropdown, setDropdown] = useState(false);
+
 
     useEffect(() => {
         if (window.location.pathname === '/') {
@@ -46,6 +49,23 @@ const LongNav = () => {
             <ul className='min-w-[680px] lg:flex justify-between capitalize p-2'>
                 {NavLinks.map((navlink) => {
                     const { id, text, url } = navlink
+                    if (text === "Resources") {
+                        return (
+                            <li
+                                key={id}
+                                className="translate-y-[10px]"
+                                onMouseEnter={() => setDropdown(true)}
+                                onMouseLeave={() => setDropdown(false)}>
+                                <NavLink
+
+                                    to={url}
+                                    className={({ isActive }) => (isActive || activeLinkId === id ? ' text-purple-900 font-[600] p-1 lg:text-[16px] transition text-[20px] mx-1 translate-y-[120px] hover:text-gray-800 border-b-[3px] border-b-purple-900' : 'text-purple-900 font-[600] p-1 lg:text-[16px] transition text-[20px] mx-1 mt-2 hover:text-gray-800 hover:border-b-[3px] hover:border-b-purple-900')}
+                                    onClick={() => handleLinkClick(id)}>{text}</NavLink>
+                                {dropdown && <Dropdown />}
+                            </li>
+                        )
+                    }
+
                     return (
                         <NavLink to={url} key={id} className={({ isActive }) => (isActive || activeLinkId === id ? 'text-purple-900 font-[600] p-1 lg:text-[16px] transition text-[20px] mx-1 mt-2 hover:text-gray-800 border-b-[3px] border-b-purple-900' : 'text-purple-900 font-[600] p-1 lg:text-[16px] transition text-[20px] mx-1 mt-2 hover:text-gray-800 hover:border-b-[3px] hover:border-b-purple-900')} onClick={() => handleLinkClick(id)}>
                             {text}
@@ -60,7 +80,7 @@ const LongNav = () => {
             <Link to={user ? `/user` : `/login`} className='text-center border-2 rounded-full border-purple-900 lg:text-[30px] text-[25px] font-[600] p-1 text-purple-900 font-display bg-purple-200' >
                 <BsPersonFill />
             </Link>
-        </div>
+        </div >
     )
 }
 
