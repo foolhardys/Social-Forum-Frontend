@@ -107,7 +107,7 @@ const Resources = () => {
       <div className="flex md:justify-between justify-center flex-col w-full lg:w-[980px] min-h-screen items-center">
         <div className="w-full p-5">
           <h2 className="text-[20px] font-[700]">Categories</h2>
-          <div className="flex flex-row flex-wrap max-h-[400px] my-[30px] gap-4 w-[980px]">
+          <div className="flex flex-row flex-wrap max-h-[400px] my-[30px] gap-4 lg:w-[980px] w-full">
             {Filters.map((category, index) => {
               return (
                 <button

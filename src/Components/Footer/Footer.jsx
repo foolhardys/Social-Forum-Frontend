@@ -22,7 +22,7 @@ const Footer = () => {
     }, []);
 
     return (
-        <footer className="flex w-full bg-black/95 md:flex-row flex-col min-h-[300px]">
+        <footer className="flex w-full bg-black/95 md:flex-row flex-col min-h-[300px] p-4">
             <div className="text-white flex-1 flex items-center justify-center flex-col">
                 <img src={logo} alt="" className="h-[170px]" />
                 <p className="text-white my-8 font-[600]">Telangana Social Studies Teachers Forum</p>

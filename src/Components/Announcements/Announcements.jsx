@@ -86,7 +86,7 @@ const Announcements = () => {
         }
     };
 
-    const handleUpdateAnnouncement = async (e,) => {
+    const handleUpdateAnnouncement = async (e, id) => {
         e.preventDefault();
 
         try {
@@ -97,7 +97,7 @@ const Announcements = () => {
             formData.append("title", title);
             formData.append("description", description);
 
-            await axios.put(updateAnnouncement, formData,
+            await axios.put(`${updateAnnouncement}/${id}`, formData,
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`,
@@ -162,8 +162,47 @@ const Announcements = () => {
                                     </div>
                                 ) : (<></>)
                             }
+                            {
+                                updateModal ? (
+                                    <form onSubmit={(e) => handleUpdateAnnouncement(e, announcement?._id)} className="h-[400px] w-[400px] absolute rounded-md ring-purple-400 z-10 bg-purple-400/90 m-auto right-0 -bottom-10 transition flex flex-col items-center justify-center gap-5">
+                                        <div className="flex items-center gap-4">
+                                            <h2 className="text-[25px] text-black font-semibold">Update Announcement</h2>
+                                            <button onClick={() => setUpdateModal(false)} className="text-red-700"><ImCross /></button>
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <label htmlFor="title" className="text-[18px] font-[500]">Title</label>
+                                            <input
+                                                value={title}
+                                                type="text"
+                                                name="title"
+                                                id="title"
+                                                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
+                                                onChange={handleInputChange} />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <label htmlFor="description" className="text-[18px] font-[500]">Description</label>
+                                            <input
+                                                value={description}
+                                                type="text"
+                                                name="description"
+                                                id="description"
+                                                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
+                                                onChange={handleInputChange} />
+                                        </div>
+                                        <button
+                                            type="submit"
+                                            className='p-2 mt-3 bg-green-700 rounded-md hover:bg-green-400 text-white text-center flex items-center justify-center'>
+                                            {
+                                                requestLoader ? <SmallLoader /> : <>Update Announcement</>
+                                            }
+                                        </button>
+                                    </form>
+                                ) : (<></>)
+                            }
                         </p>
-                    })
+
+                    }
+                    )
                 }
             </div>
             {
@@ -207,43 +246,6 @@ const Announcements = () => {
                             className='p-2 mt-3 bg-blue-700 rounded-md hover:bg-blue-400 text-white text-center flex items-center justify-center'>
                             {
                                 requestLoader ? <SmallLoader /> : <>Create Announcement</>
-                            }
-                        </button>
-                    </form>
-                ) : (<></>)
-            }
-            {
-                updateModal ? (
-                    <form onSubmit={handleUpdateAnnouncement} className="h-[400px] w-[400px] absolute rounded-md ring-purple-400 z-10 bg-purple-400/90 m-auto right-0 -bottom-10 transition flex flex-col items-center justify-center gap-5">
-                        <div className="flex items-center gap-4">
-                            <h2 className="text-[25px] text-black font-semibold">Update Announcement</h2>
-                            <button onClick={() => setUpdateModal(false)} className="text-red-700"><ImCross /></button>
-                        </div>
-                        <div className="flex flex-col">
-                            <label htmlFor="title" className="text-[18px] font-[500]">Title</label>
-                            <input
-                                value={title}
-                                type="text"
-                                name="title"
-                                id="title"
-                                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
-                                onChange={handleInputChange} />
-                        </div>
-                        <div className="flex flex-col">
-                            <label htmlFor="description" className="text-[18px] font-[500]">Description</label>
-                            <input
-                                value={description}
-                                type="text"
-                                name="description"
-                                id="description"
-                                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md"
-                                onChange={handleInputChange} />
-                        </div>
-                        <button
-                            type="submit"
-                            className='p-2 mt-3 bg-green-700 rounded-md hover:bg-green-400 text-white text-center flex items-center justify-center'>
-                            {
-                                requestLoader ? <SmallLoader /> : <>Update Announcement</>
                             }
                         </button>
                     </form>
