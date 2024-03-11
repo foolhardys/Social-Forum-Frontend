@@ -24,6 +24,9 @@ import UpdateQuestion from "./Pages/UpdateQuestion"
 import User from './Pages/User'
 import UpdateUser from "./Pages/UpdateUser"
 import ActiveLinkProvider from "./Context/ActiveLinkContext"
+import Gallery from "./Pages/Gallery"
+import CreateGallery from "./Pages/CreateGallery"
+import UpdateGallery from "./Pages/UpdateGallery"
 
 function App() {
 
@@ -37,11 +40,14 @@ function App() {
         <Route path='contact' element={<Contact />} />
         <Route path='faq' element={<Faq />} />
         <Route path='resources' element={<Resources />} />
+        <Route path='gallery' element={<Gallery />} />
         <Route path='quiz' element={<Quiz />} />
         <Route path='createResource' element={<CreateResource />} />
+        <Route path='createGallery' element={<CreateGallery />} />
         <Route path='createBlog' element={<CreateBlog />} />
         <Route path='updateBlog/:id' element={<UpdateBlog />} />
         <Route path='updateResource/:id' element={<UpdateResource />} />
+        <Route path='updateGallery/:id' element={<UpdateGallery />} />
         <Route path='updateQuiz/:id' element={<UpdateQuestion />} />
         <Route path='createQuestion' element={<CreateQuestion />} />
         <Route path='dashboard' element={<Dashboard />} />

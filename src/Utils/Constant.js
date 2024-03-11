@@ -15,22 +15,27 @@ export const NavLinks = [
         url: '/resources',
     },
     {
-        id: 4,
+        id: 4 ,
+        text: 'Gallery',
+        url: '/gallery'
+    },
+    {
+        id: 5,
         text: 'Blog',
         url: '/blogs'
     },
     {
-        id: 5,
+        id: 6,
         text: 'Quiz',
         url: '/quiz'
     },
     {
-        id: 6,
+        id: 7,
         text: 'FAQ',
         url: '/faq'
     },
     {
-        id: 7,
+        id: 8,
         text: 'Contact Us',
         url: '/contact'
     }
