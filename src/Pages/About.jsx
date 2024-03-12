@@ -1,7 +1,9 @@
 import About2 from "../Components/About/About2"
+import About3 from "../Components/About/About3"
 import AboutHero from "../Components/About/AboutHero"
 import AboutHero2 from "../Components/About/AboutHero2"
 import Team from "../Components/About/Team"
+
 
 const About = () => {
   return (
@@ -10,6 +12,7 @@ const About = () => {
       <AboutHero />
       <Team />
       <AboutHero2 />
+      <About3 />
     </section>
   )
 }
