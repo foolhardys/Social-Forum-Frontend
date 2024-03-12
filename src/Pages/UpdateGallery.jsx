@@ -24,6 +24,12 @@ const UpdateGallery = () => {
     const url = updateUrl + `/${id}`
 
 
+
+    const handleImagesChange = (event) => {
+        setImages(event.target.files)
+    };
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -71,10 +77,6 @@ const UpdateGallery = () => {
         }
     };
 
-
-    const handleImagesChange = (event) => {
-        setImages(event.target.files)
-    };
 
 
 
