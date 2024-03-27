@@ -10,8 +10,8 @@ const About = () => {
     <section className='min-h-screen flex items-center flex-col'>
       <About2 />
       <AboutHero />
-      <Team />
       <AboutHero2 />
+      <Team />
       <About3 />
     </section>
   )

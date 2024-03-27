@@ -3,7 +3,7 @@ import image from './pic-2.jpg'
 const AboutHero2 = () => {
     return (
         <section className="flex md:flex-row flex-col max-w-[980px] p-4 gap-4 my-[25px]">
-            <div className='w-7/12'>
+            <div className='md:w-7/12 w-full'>
                 <h1 className="lg:text-[60px] md:text-[45px] text-[55px] leading-tight font-serif my-10">G Venkateswarlu</h1>
                 <h2 className="lg:text-[45px] md:text-[30px] text-[30px] leading-tight font-serif my-10">General Secretary
                     , TSSTF</h2>
@@ -11,7 +11,7 @@ const AboutHero2 = () => {
                     Address  : ZPHS, Champapet, Ranga Reddy dist
                 </p>
             </div>
-            <div className='w-5/12 flex items-center'>
+            <div className='md:w-5/12 w-full flex items-center'>
                 <img src={image} alt="image" className='rounded-md shadow-lg' />
             </div>
         </section>
