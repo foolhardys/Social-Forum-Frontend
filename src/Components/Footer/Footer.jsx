@@ -25,7 +25,7 @@ const Footer = () => {
         <footer className="flex w-full bg-black/95 md:flex-row flex-col min-h-[300px] p-4">
             <div className="text-white flex-1 flex items-center justify-center flex-col">
                 <img src={logo} alt="" className="h-[170px]" />
-                <p className="text-white my-8 font-[600]">Telangana Social Studies Teachers Forum</p>
+                <p className="text-white my-8 font-[600]">Telangana Social Studies Teachers&apos; Forum</p>
             </div>
             <ul className="flex-1 md:px-12 px-3 py-4 flex flex-col items-start justify-center">
                 <h1 className="text-gray-100 font-[700] mb-[30px] text-[16px]">Explore!!</h1>
@@ -61,7 +61,10 @@ const Footer = () => {
                 <img src={logo2} alt="" className="h-[150px]" />
                 <h1 className="text-white font-[600]">Website and Designs By : <a href="https://zorway.in/" className="underline font-[700]">Zorway</a> </h1>
                 <p className="text-white font-[400] text-left">Contact us: </p>
-                <p className="text-white font-[400]">Phone: +919100545426 <br /> Whatsapp: +918770741112 <br /> Email: contact@zorway.in</p>
+                <p className="text-white font-[400]">
+                    <a href="tel:+919100545426" className="hover:underline transition">Phone: +919100545426</a>  <br />
+                    <a href="whatsapp://send?phone=918770741112" className="hover:underline transition"> Whatsapp: +918770741112</a> <br />
+                    <a href="mailto:contact@zorway.in" className="hover:underline transition">Email: contact@zorway.in</a></p>
             </div>
         </footer>
     )

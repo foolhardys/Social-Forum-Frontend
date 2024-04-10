@@ -27,7 +27,9 @@ const User = () => {
             }
           })
         const data = res.data.data
+        console.log(data);
         setUser(data)
+        console.log(user);
         setIsLoading(false)
       } catch (error) {
         setIsLoading(false)

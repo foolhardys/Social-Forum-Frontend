@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 import Loading from "./Loading"
 import Error from "./Error"
 import GallerySlider from "../Components/Slider/GallerySlider"
-import SmallLoader from "../Components/SmallLoader"
+// import SmallLoader from "../Components/SmallLoader"
 
 const baseUrl = import.meta.env.VITE_API_URL + '/getAllGalleryImages'
 const deleteUrl = import.meta.env.VITE_API_URL + '/deleteGalleryImage'
@@ -15,7 +15,6 @@ const Gallery = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
     const [gallery, setGallery] = useState([])
-    const [requestLoader, setRequestLoader] = useState(false)
     const tempuser = localStorage.getItem('user')
     const user = JSON.parse(tempuser)
 
@@ -38,7 +37,6 @@ const Gallery = () => {
     const deleteGallery = async (id) => {
         console.log(id);
         try {
-            setRequestLoader(true)
             const token = user.token
             await axios.delete(`${deleteUrl}/${id}`,
                 {
@@ -47,12 +45,9 @@ const Gallery = () => {
                     }
                 }
             )
-            setRequestLoader(false)
             toast.success('Gallery Slider deleted')
             fetchData()
         } catch (error) {
-            setRequestLoader(false)
-            // setError(error)
             toast.error(error?.response?.data?.message)
         }
     }
@@ -96,9 +91,7 @@ const Gallery = () => {
                                                 <button
                                                     className="p-2 rounded-md bg-red-800 hover:bg-red-400 text-center text-white font-[500]"
                                                     onClick={() => deleteGallery(gallery?._id)}>
-                                                    {
-                                                        requestLoader ? <span><SmallLoader /></span> : <>Delete Gallery Slider</>
-                                                    }
+                                                    Delete Gallery Slider
                                                 </button>
                                             </h3>
                                         ) : (<></>)

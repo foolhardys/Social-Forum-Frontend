@@ -1,23 +1,31 @@
 import emailjs from '@emailjs/browser';
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import SmallLoader from '../Components/SmallLoader'
+import toast from 'react-hot-toast'
 
 const Contact = () => {
 
   const form = useRef();
+  const [requestLoader, setRequestLoader] = useState(false)
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setRequestLoader(true)
 
     emailjs
-      .sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form.current, {
-        publicKey: 'YOUR_PUBLIC_KEY',
+      .sendForm('service_t0cus69', 'template_ydjaaqw', form.current, {
+        publicKey: 'inFnBAhN4ymIZG0un',
       })
       .then(
-        () => {
-          console.log('SUCCESS!');
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text);
+          toast.success(`${response.text} , Form submitted successfully`)
+          setRequestLoader(false)
         },
         (error) => {
           console.log('FAILED...', error.text);
+          toast.error(error.text)
+          setRequestLoader(false)
         },
       );
   };
@@ -39,27 +47,29 @@ const Contact = () => {
           </div>
           <div className=" min-h-[250px] flex flex-col p-2">
             <div className="md:flex-row flex-col flex md:gap-2 gap-6 my-4">
-              <input type="text" id="name" name="name" className="p-2 rounded-md border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Name" />
-              <input type="email" id="email" name="email" className="p-2 rounded-md border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Your Email" />
+              <input type="text" id="name" name="name" className="p-2 rounded-md border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" required placeholder="Your Name" />
+              <input type="email" id="email" name="email" className="p-2 rounded-md border-2 border-white text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" required placeholder="Your Email" />
             </div>
-            <input type="tel" id="phone" name="phone" className="p-2 rounded-md border-2 border-white my-4 text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" placeholder="Phone Number" />
+            <input type="tel" id="phone" name="phone" className="p-2 rounded-md border-2 border-white my-4 text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3" required placeholder="Phone Number" />
             <div className="flex flex-col">
-          <label htmlFor="type" className="text-[18px] font-[500]">Type</label>
-          <select
-            name="type"
-            id="type"
-            required
-            className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md mt-1 text-[18px]"
-            placeholder='Type'>
-            <option className="text-[16px] p-1" value="Teacher Resources">Public teacher</option>
-            <option className="text-[16px] p-1" value="Student Resources">Other teacher</option>
-            <option className="text-[16px] p-1" value="E - Resources">Parent</option>
-            <option className="text-[16px] p-1" value="Model Papers">Student</option>
-            <option className="text-[16px] p-1" value="Career Guidance">Others</option>
-          </select>
-        </div>
-            <textarea id="message" name="message" placeholder="How can we help you ??" className=" resize-none h-[100px] text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3 rounded-lg mt-4 p-2"></textarea>
-            <button type="submit" className="bg-purple-700 p-2 rounded-md my-8 text-white text-[18px] hover:bg-purple-500 transition">Send Message</button>
+              <label htmlFor="type" className="text-[18px] font-[500]">Type</label>
+              <select
+                name="type"
+                id="type"
+                required
+                className="p-2 outline-none focus:border-2 focus:border-blue-600 rounded-md mt-1 text-[18px]"
+                placeholder='Type'>
+                <option className="text-[16px] p-1" value="Social teacher">Social teacher</option>
+                <option className="text-[16px] p-1" value="Other teacher">Other teacher</option>
+                <option className="text-[16px] p-1" value="Parent">Parent</option>
+                <option className="text-[16px] p-1" value="Student">Student</option>
+                <option className="text-[16px] p-1" value="Others">Others</option>
+              </select>
+            </div>
+            <textarea id="message" required name="message" placeholder="How can we help you ??" className=" resize-none h-[100px] text-[18px] focus:bg-gray-100 focus:border-blue-600 outline-none focus:border-3 rounded-lg mt-4 p-2"></textarea>
+            <button type="submit" className="bg-purple-700 p-2 rounded-md my-8 text-white text-[18px] hover:bg-purple-500 flex items-center justify-center transition">{
+              requestLoader ? <SmallLoader /> : <>Submit form</>
+            }</button>
           </div>
 
         </form>

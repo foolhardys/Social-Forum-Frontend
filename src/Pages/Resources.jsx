@@ -39,13 +39,13 @@ const Resources = () => {
   }
   function convertToDateInMillis(dateString) {
     try {
-    const dateObj = new Date(dateString);
-    if (isNaN(dateObj.getTime())) {
-      throw new Error("Invalid date string format.");
-    }
-    const currentTime = Date.now();
-    const twoDaysInMilliseconds = 2 * 24 * 60 * 60 * 1000;
-    return (currentTime - dateObj.getTime()) <= twoDaysInMilliseconds;
+      const dateObj = new Date(dateString);
+      if (isNaN(dateObj.getTime())) {
+        throw new Error("Invalid date string format.");
+      }
+      const currentTime = Date.now();
+      const fifteenDaysInMilliseconds = 15 * 24 * 60 * 60 * 1000;
+      return (currentTime - dateObj.getTime()) <= fifteenDaysInMilliseconds;
     } catch (error) {
       console.error("Error converting date:", error.message);
       return null;
@@ -104,7 +104,7 @@ const Resources = () => {
   return (
     <section className="min-h-screen bg-purple-200 p-4 flex flex-col items-center justify-center">
       <h1 className="text-[35px] font-[700] mb-5">Resources</h1>
-      <div className="flex md:justify-between justify-center flex-col w-full lg:w-[980px] min-h-screen items-center">
+      <div className="flex md:justify-between justify-center flex-col w-full lg:w-[980px] items-center">
         <div className="w-full p-5">
           <h2 className="text-[20px] font-[700]">Categories</h2>
           <div className="flex flex-row flex-wrap max-h-[400px] my-[30px] gap-4 lg:w-[980px] w-full">
@@ -124,11 +124,11 @@ const Resources = () => {
         </div>
         {
           isLoading ? <Loading /> : (
-            <div className="w-full min-h-[80vh] bg-purple-200 flex md:flex-row md:flex-wrap flex-col gap-4">
+            <div className="w-full min-h-[40vh] bg-purple-200 flex md:flex-row md:flex-wrap flex-col gap-4 mb-5">
               {filteredItems.map((item, idx) => (
                 <div key={`items-${idx}`} className="w-full flex items-center justify-center flex-col lg:w-[300px] bg-purple-300 shadow-lg rounded-md ring-1 ring-offset-purple-400 p-1 min-h-[250px] md:h-[300px] relative">
                   {
-                    convertToDateInMillis(item?.createdAt) ? (<span className="absolute top-1 right-1 p-2 bg-green-700 rounded-md text-white">Newly added</span>):(<></>)
+                    convertToDateInMillis(item?.createdAt) ? (<span className="text-[16px] font-[500] absolute top-1 right-1 py-1 px-4 rounded-md text-black bg-yellow-200 ring-yellow-400 ring-1 drop-shadow-[1.5px_3.5px_3.5px_rgba(221,212,179,1)]">New</span>) : (<></>)
                   }
                   {
                     item.dataType === 'file' ? (
