@@ -1,4 +1,3 @@
-import AdsComponent from './Components/AdsComponent'
 import Banner from './Components/Banner'
 import Footer from './Components/Footer/Footer'
 import Navbar from './Components/Navbar/Navbar'
