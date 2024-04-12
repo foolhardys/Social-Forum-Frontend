@@ -37,8 +37,8 @@ const Contact = () => {
           <h2 className="lg:text-[55px] md:text-[45px] text-[50px] font-semibold leading-tight font-serif my-10">Contact Us</h2>
           <p className="lg:text-[20px] md:text-[16px] text-[18px] mb-10">Have questions or suggestions? Reach out to us using the form.
             Drop an E-mail , call or message.</p>
-          <a href="mailto:" className="lg:text-[20px] md:text-[16px] text-[18px] mb-10">xyz@gmail.com</a>
-          <h2 className="lg:text-[20px] md:text-[16px] text-[18px] mb-10">xxxxxxxxxx</h2>
+          <a href="mailto:" className="lg:text-[20px] md:text-[16px] text-[18px] mb-10 transition hover:underline">socialteacherstg@gmail.com</a>
+          <h2 className="lg:text-[20px] md:text-[16px] text-[18px] mb-10">+919705806581</h2>
         </div>
         <form ref={form} onSubmit={sendEmail} className="bg-black md:p-8 p-4 flex flex-col justify-center gap-1 flex-1 rounded-lg shadow-lg m-2 min-w-[300px]">
           <div>
