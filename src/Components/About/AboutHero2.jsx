@@ -1,4 +1,4 @@
-import image from './pic-2.jpg'
+import image from './pic-new.jpg'
 
 const AboutHero2 = () => {
     return (
