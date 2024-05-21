@@ -25,7 +25,6 @@ const Login = () => {
         password,
       });
       const user = response?.data?.user;
-      console.log(user)
       setRequestLoader(false)
       localStorage.setItem("user", JSON.stringify(user));
       if (user.approved) {
