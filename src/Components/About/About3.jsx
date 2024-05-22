@@ -8,7 +8,7 @@ const About3 = () => {
                 <h1 className="lg:text-[60px] md:text-[45px] text-[55px] leading-tight font-serif my-10">Sri Nakka Srinivas Yadav</h1>
                 <h2 className="lg:text-[30px] md:text-[25px] text-[30px] leading-tight font-serif my-10">Chairman : Smt. Nakka Venkatamma Yadav ,  Shri Nakka Yadagiri Swamy Yadav Education and Sports Foundation</h2>
                 <p className="lg:text-[18px] md:text-[16px] text-[16px] mb-10">
-                     <span className='font-[600]'>Adopted Schools  :</span> <br /> Smt. Nakka Bagamma @ Nakka Balamma Yadav Sri Nakka Venkat Swamy Yadav Zilla Parishad High School , Sahebnagar , Hayathnagar Mdl , R.R. Dist, Telangana
+                     <span className='font-[600]'>Adopted Schools  :</span> <br /> Smt. Nakka Bagamma @ Nakka Balamma Yadav Sri Nakka Venkat Swamy Yadav Zilla Parishad High School , Hayathnagar , Hayathnagar Mdl , R.R. Dist, Telangana
                     <br />
                     <br />
                     Smt. Nakka Venkatamma Yadav,  Shri Nakka Yadagiri Swamy Yadav Zilla Parishad High School , Sahebnagar , Hayathnagar Mdl , R.R. Dist, Telangana
