@@ -5,13 +5,12 @@ import Loading from './Loading'
 import Error from './Error'
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 
 const quizUrl = import.meta.env.VITE_API_URL + '/getAllQuizes'
-// const baseUrl = import.meta.env.VITE_API_URL + '/getAllQuizes'
 const deleteUrl = import.meta.env.VITE_API_URL + '/deleteQuiz'
 
 const Quiz = () => {
-
   const [selectedFilters, setSelectedFilters] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -27,7 +26,6 @@ const Quiz = () => {
       setIsLoading(true)
       const res = await axios.get(quizUrl)
       const data = res.data.data
-      console.log(data);
       setFilteredItems(data)
       setItems(data)
       setIsLoading(false)
@@ -36,13 +34,11 @@ const Quiz = () => {
       setError(error)
       toast.error(error?.response?.data?.message)
     }
-
   }
 
   function shuffleArray(array) {
     return array.sort(() => Math.random() - 0.5);
   }
-
 
   const handleChange = (event, questionId) => {
     setSelectedAnswers({ ...selectedAnswers, [questionId]: event.target.value });
@@ -52,10 +48,10 @@ const Quiz = () => {
     let score = 0;
     filteredItems.forEach((question) => {
       const correctAnswer = question.correctAnswer;
-      const selectedAnswer = selectedAnswers[question._id]; // Retrieve selected answer for the current question
+      const selectedAnswer = selectedAnswers[question._id];
 
       if (selectedAnswer && selectedAnswer === correctAnswer) {
-        score += 1; // Add point value if answer is correct
+        score += 1;
       }
     });
     setQuizAnswered(true)
@@ -63,10 +59,8 @@ const Quiz = () => {
     return score;
   };
 
-
   const handleFilterButtonClick = (selectedCategory) => {
     setSelectedFilters([selectedCategory]);
-    console.log(selectedCategory);
   };
 
   const filterItems = () => {
@@ -74,7 +68,6 @@ const Quiz = () => {
     if (selectedCategory) {
       const filteredItems = items.filter((item) => item.category === selectedCategory);
       const shuffledItems = shuffleArray(filteredItems.slice());
-      console.log(shuffledItems);
       setFilteredItems(shuffledItems);
     } else {
       setFilteredItems([...items]);
@@ -82,7 +75,6 @@ const Quiz = () => {
   };
 
   const deleteQuiz = async (id) => {
-    console.log(id);
     try {
       const token = user.token
       await axios.delete(`${deleteUrl}/${id}`,
@@ -118,67 +110,79 @@ const Quiz = () => {
   }
 
   return (
-    <section className="min-h-screen bg-purple-200 p-4 flex flex-col items-center justify-center">
-      <h1 className="text-[35px] font-[700]">Take a Quiz!!!</h1>
-      <div className="flex flex-col w-full lg:w-[980px] items-center p-5">
-        <div className="w-full p-5">
-          <h2 className="text-[20px] font-[700]">Class</h2>
-          <div className="flex flex-row flex-wrap mt-[30px] gap-4">
-            {QuizCategories.map((category, index) => {
-              return (
-                <button
-                  className={`p-2 rounded-md  hover:bg-purple-100 hover:text-black ${selectedFilters?.includes(category) ? "bg-purple-100 border-purple-100 text-black hover:bg-purple-300" : "text-white bg-purple-600"
-                    }`}
-                  onClick={() => handleFilterButtonClick(category)}
-                  key={index}>{`Class-${category}`}</button>
-              )
-            })}
-            {
-              user?.accountType === 'Admin' || user?.accountType === 'SuperAdmin' ? (
-                <Link to='/createQuestion' className="p-2 rounded-md bg-blue-800  hover:bg-blue-700 text-white text-center">Add question</Link>
-              ) : (<></>)
-            }
+    <section className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Take a Quiz!</h1>
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold mb-4">Select Class</h2>
+          <div className="flex flex-wrap gap-2">
+            {QuizCategories.map((category, index) => (
+              <button
+                key={index}
+                className={`px-4 py-2 rounded-full transition-colors duration-200 ${
+                  selectedFilters.includes(category)
+                    ? "bg-purple-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-purple-100"
+                }`}
+                onClick={() => handleFilterButtonClick(category)}
+              >
+                Class-{category}
+              </button>
+            ))}
+            {user?.accountType === 'Admin' || user?.accountType === 'SuperAdmin' ? (
+              <Link to='/createQuestion' className="px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 flex items-center">
+                <FaPlus className="mr-2" /> Add question
+              </Link>
+            ) : null}
           </div>
         </div>
-        <div className="w-full bg-transparent">
+        <div className="space-y-6">
           {filteredItems.map((item, idx) => (
-            <div key={`items-${idx}`} className="w-full p-2">
-              <p className="text-[16px]">({idx + 1}). {item.question}</p>
-              {
-                item.options.map((option, idx) => (
-                  <div className="my-1 flex gap-2 items-center" key={idx}>
+            <div key={`items-${idx}`} className="bg-white rounded-lg shadow-md p-6">
+              <p className="text-lg font-semibold mb-4">({idx + 1}). {item.question}</p>
+              <div className="space-y-2">
+                {item.options.map((option, optionIdx) => (
+                  <div key={optionIdx} className="flex items-center">
                     <input
                       type="radio"
-                      name={item?._id}
+                      id={`${item._id}-${optionIdx}`}
+                      name={item._id}
                       value={option}
-                      id="option"
-                      checked={selectedAnswers[item?._id] === option}
-                      onChange={(e) => handleChange(e, item?._id)} />
-                    <label htmlFor={`${item?._id}-${idx}`}>{option}</label>
+                      checked={selectedAnswers[item._id] === option}
+                      onChange={(e) => handleChange(e, item._id)}
+                      className="mr-2"
+                    />
+                    <label htmlFor={`${item._id}-${optionIdx}`} className="text-gray-700">{option}</label>
                   </div>
-                ))
-              }
-              {
-                quizAnswered ? (<p className="text-[16px]">Correct answer : {item.correctAnswer}</p>) : (<></>)
-              }
-              {
-                user?.accountType === 'Admin' || user?.accountType === 'SuperAdmin' ? (
-                  <div className="flex gap-2">
-                    <Link to={`/updateQuiz/${item._id}`} className="p-2 rounded-md bg-green-800 hover:bg-green-700 min-h-[20px] flex justify-center items-center text-center text-white font-[500] text-[12px] md:text-[16px]">Update question</Link>
-                    <button className="p-2 rounded-md bg-red-800 hover:bg-red-700 min-h-[20px] flex justify-center items-center text-center text-white font-[500] text-[12px] md:text-[16px]" onClick={() => deleteQuiz(item._id)}>
-                      Delete Question
-                    </button>
-                  </div>
-                ) : (
-                  <></>
-                )
-              }
+                ))}
+              </div>
+              {quizAnswered && (
+                <p className="mt-4 text-green-600 font-semibold">Correct answer: {item.correctAnswer}</p>
+              )}
+              {(user?.accountType === 'Admin' || user?.accountType === 'SuperAdmin') && (
+                <div className="mt-4 flex gap-2">
+                  <Link to={`/updateQuiz/${item._id}`} className="px-4 py-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors duration-200 flex items-center">
+                    <FaEdit className="mr-2" /> Update
+                  </Link>
+                  <button
+                    className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition-colors duration-200 flex items-center"
+                    onClick={() => deleteQuiz(item._id)}
+                  >
+                    <FaTrash className="mr-2" /> Delete
+                  </button>
+                </div>
+              )}
             </div>
           ))}
-          <button
-            className='p-2 mt-3 bg-blue-700 rounded-md hover:bg-blue-400 text-white text-center flex items-center justify-center'
-            onClick={calculateScore}>Check score</button>
         </div>
+        {filteredItems.length > 0 && (
+          <button
+            className="mt-8 w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-semibold text-lg"
+            onClick={calculateScore}
+          >
+            Check Score
+          </button>
+        )}
       </div>
     </section>
   )

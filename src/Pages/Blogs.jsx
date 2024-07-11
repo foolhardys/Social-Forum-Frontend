@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Loading from "./Loading";
 import Error from "./Error";
 import toast from "react-hot-toast";
+import { FaPlus } from "react-icons/fa";
 
 const baseUrl = import.meta.env.VITE_API_URL + "/getAllBlogs";
 
@@ -20,7 +21,6 @@ const Blogs = () => {
         setIsLoading(true);
         const res = await axios.get(baseUrl);
         const data = res.data.data;
-        console.log(data);
         setBlogs(data);
         setIsLoading(false);
       } catch (error) {
@@ -41,43 +41,45 @@ const Blogs = () => {
   }
 
   return (
-    <div className="bg-purple-200">
-      <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-[1080px] lg:px-8">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-5">
-          Blogs
-        </h2>
-        {user?.accountType === "Admin" || user?.accountType === "SuperAdmin" ? (
-          <Link
-            className="p-2 rounded-md bg-blue-800 hover:bg-blue-400 text-center text-white font-[500] mb-5"
-            to="/createBlog"
-          >
-            Create New Blog
-          </Link>
-        ) : (
-          <></>
-        )}
-        <div className="flex gap-4 mt-6 md:flex-row flex-col flex-wrap">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 to-indigo-200 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-4xl font-bold text-gray-900">Blogs</h2>
+          {user?.accountType === "Admin" || user?.accountType === "SuperAdmin" ? (
+            <Link
+              className="px-4 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-200 flex items-center"
+              to="/createBlog"
+            >
+              <FaPlus className="mr-2" /> Create New Blog
+            </Link>
+          ) : null}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((blog) => (
             <div
               key={blog._id}
-              className="relative lg:w-[380px] w-full md:w-[280px] my-2 flex-wrap"
+              className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105"
             >
-              <div className="w-100 w-full overflow-hidden rounded-md lg:aspect-none group-hover:opacity-75 lg:h-60">
+              <div className="aspect-w-16 aspect-h-9">
                 <img
                   src={blog.thumbnail}
                   alt={blog.title}
-                  className="h-[200px] w-full object-cover object-center lg:h-full lg:w-full"
+                  className="object-cover w-full h-full"
                 />
               </div>
-              <div className="mt-4 flex justify-between">
-                <div className="w-full">
-                  <h3 className="text-md text-center w-full text-gray-900">
-                    <Link to={`/blogs/${blog._id}`}>
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {blog.title.replace(/"/g, "")}
-                    </Link>
-                  </h3>
-                </div>
+              <div className="p-4">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 line-clamp-2">
+                  <Link to={`/blogs/${blog._id}`} className="hover:text-blue-600 transition-colors duration-200">
+                    {blog.title.replace(/"/g, "")}
+                  </Link>
+                </h3>
+                <p className="text-gray-600 line-clamp-3">{blog.description || "No description available."}</p>
+                <Link 
+                  to={`/blogs/${blog._id}`}
+                  className="mt-4 inline-block px-4 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors duration-200"
+                >
+                  Read More
+                </Link>
               </div>
             </div>
           ))}
